@@ -1,36 +1,49 @@
 import random
 
 
-class EmployeeWage_Problem:
+class Employee_Total_Wages:
     def __init__(self):
-        self.num_of_working_days = 20
-        self.is_full_time = 2
-        self.is_part_time = 1
-        self.emp_rate_per_hour = 20
-        self.max_hrs_in_month = 100
+        self.wage_per_hour = 20
 
-    def total_working_hours(self):
-        totalemphrs = 0
-        totalworkingdays = 0
-        while totalemphrs < self.max_hrs_in_month and totalworkingdays < self.num_of_working_days:
-            totalworkingdays = totalworkingdays + 1
-            empcheck = random.randint(0, 2)
-            if empcheck == self.is_full_time:
-                emphrs = 8
-            elif empcheck == self.is_part_time:
-                emphrs = 4
+    def working_hours_or_days(self):
+        attendance = []
+        category = []
+        daily_wages = []
+        hours_worked = 0
+        days = 0
+        total_wage = 0
+        while True:
+            days += 1
+            if random.randint(0, 2) == 0:
+                attendance.append('Absent')
             else:
-                emphrs = 0
+                attendance.append('Present')
+                if random.randint(0, 2) == 0:
+                    category.append("Permanent")
+                    total_daily_hours = 8
+                    hours_worked += total_daily_hours
+                    daily_wages.append(8 * self.wage_per_hour)
+                    total_wage = total_wage + (self.wage_per_hour * total_daily_hours)
 
-            totalemphrs += emphrs
-            print("Days :", totalworkingdays)
-            print("EmpHrs: ", emphrs)
+                else:
+                    category.append("PartTime")
+                    total_daily_hours = 4
+                    hours_worked += total_daily_hours
+                    daily_wages.append(4 * self.wage_per_hour)
+                    total_wage = total_wage + (self.wage_per_hour * total_daily_hours)
 
-        totalempwage = totalemphrs * self.emp_rate_per_hour
-        print("TotalEmployeeWage: ", totalempwage)
-        print("TotalWorkingDays :", totalworkingdays)
-        print("TotalEmpHrs: ", totalemphrs)
+            if days == 20 or hours_worked == 100:
+                print("Month Completed")
+                return attendance, category, days, hours_worked, daily_wages, total_wage, attendance.count("Present")
+
+    def show_output(self):
+
+        attendance, category, working_days, hours_worked, daily_wages, total_wages, present_days = self.working_hours_or_days()
+        print("Wages For {} days = {}".format(present_days, total_wages))
+        print("Employee was Present for {} out of {} working days for {} hours.".format(present_days, working_days,
+                                                                                        hours_worked))
+        print("Daily Wages : ", daily_wages)
 
 
-emp1 = EmployeeWage_Problem()
-emp1.total_working_hours()
+emp1 = Employee_Total_Wages()
+emp1.show_output()
